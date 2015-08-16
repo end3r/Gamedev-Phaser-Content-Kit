@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Article 14: Animations and tweens</title>
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<h1>Gamedev Phaser Content Kit</h1>
+<h2>Article 14: Animations and tweens</h2>
+
+<p>To make the game look more juicy and alive we can use the advantages of animations and tweens. It will result in having the game experience feel better and look more entertaining. For example, we can make the ball wobble when it hits something - we would use the spritesheet for that:</p>
+
+<pre class="brush: js">
+game.load.spritesheet('ball', 'img/wobble.png', 20, 20);
+</pre>
+
+<p>Instead of loading a single image of the ball we can load the whole spritesheet, a collection of different images.</p>
+
+<p>IMAGE_OF_WOBBLE_SPRITESHEET</p>
+
+<p>We will use them to show the frames in a particular way and create an illusion of animation. The spritesheet method's two extra paremeters are determining the width and height of the single frame in the given spritesheet file.</p>
+
+<pre class="brush: js">
+ball = game.add.sprite(50, 250, 'ball');
+ball.animations.add('wobble', [0,1,0,2,0,1,0,2,0], 24);
+</pre>
+
+<p>To add an animation to the object use the <code>animations.add</code> method. The first parameter is the name we chose for the animation, the second is the array of frames from the file mentioned earlier and third is the framerate. In the method handling the collision between the ball and the paddle we can add an extra function that will be executed every time the collision happen, just like we're handling the <code>ballHitBrick</code> function:</p>
+
+<pre class="brush: js">
+function update() {
+    game.physics.arcade.collide(ball, paddle, ballHitPaddle);
+    game.physics.arcade.collide(ball, bricks, ballHitBrick);
+    paddle.x = game.input.x || game.world.width*0.5;
+}
+</pre>
+
+<p>Then we can create that function (having <code>ball</code> and <code>paddle</code> as default parameters) and play the wobble animation inside it:</p>
+
+<pre class="brush: js">
+function ballHitPaddle(ball, paddle) {
+    ball.animations.play('wobble');
+}
+</pre>
+
+<p>The animation is played every time the ball hits the paddle. We can add that line to <code>ballHitBrick</code> too if we feel it would make the game look better.</p>
+
+<h2 id="Tweens">Tweens</h2>
+
+<p>Animations are now covered, so let's see how tweens work:</p>
+
+<pre class="brush: js">
+function ballHitBrick(ball, brick) {
+    var killTween = this.add.tween(brick.scale);
+    killTween.to({x:0,y:0}, 200, Phaser.Easing.Linear.None);
+    killTween.onComplete.addOnce(function(){
+        brick.kill();
+    }, this);
+    killTween.start();
+    score += 10;
+    scoreText.setText('Points: '+score);
+    if(score === brickInfo.count.row*brickInfo.count.col*10) {
+        alert('You won the game, congratulations!');
+        location.reload();
+    }
+}
+</pre>
+
+<p>When defining a new tween you have to specify which property will be tweened - in our case, instead of hiding the bricks instantly when hit by the ball, we will make their width and height scale to zero, so they will nicely dissapear. The <code>to</code> method takes the object of desired parameters and values, time of the tween in miliseconds and the type of tween from the defined collection. We can also add the optional <code>onComplete</code> function which will be executed when the tween will be finished. The last thing do to is to start the tween right away.</p>
+
+<p>That's the expanded version of the tween definition, but we can also use the shorthand syntax:</p>
+
+<pre class="brush: js">
+game.add.tween(brick.scale).to({x:2,y:2}, 500, Phaser.Easing.Elastic.Out, true, 100);
+</pre>
+
+<p>This tween will double the brick's scale in half the second using the Elastic easing, will start automatically and have a delay of 100 miliseconds.</p>
+
+<h2 id="Compare_your_code">Compare your code</h2>
+
+<p>You can check the finished code for this lesson for yourself in the live demo below, and play with it to understand better how it works:</p>
+
+<p><iframe width="100%" height="350" src="https://jsfiddle.net/end3r/swk22pu9/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe></p>
+
+<h2 id="Next_steps">Next steps</h2>
+
+<p>Animations and tweens look very nice, but we can add even more to the game - we'll handle the <a href="http://end3r.github.io/Gamedev-Phaser-Content-Kit/tutorial/article15.html">button</a> input.</p>
+
+</body>
+</html>

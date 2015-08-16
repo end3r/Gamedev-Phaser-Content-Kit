@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Article 08: Game over</title>
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<h1>Gamedev Phaser Content Kit</h1>
+<h2>Article 08: Game over</h2>
+
+<p>To make the game more interesting we can introduce the ability to lose - if you don't hit the ball before it reaches the bottom edge of the screen it will be game over. To do that, we need to disable the ball's collision with the bottom edge of the screen. Add the code below in the <code>create</code> function where you define the ball's attributes:</p>
+
+<pre class="brush: js">
+game.physics.arcade.checkCollision.down = false;
+</pre>
+
+<p>This will make the three walls (top, left and right) collidable against the ball, but the fourth (bottom) will dissapear. The ball will go out of screen at the bottom, so we need a way to detect that and act accordingly:</p>
+
+<pre class="brush: js">
+ball.checkWorldBounds = true;
+ball.events.onOutOfBounds.add(function(){
+    alert('Game over!');
+    location.reload();
+}, this);
+</pre>
+
+<p>Adding those lines will make the ball check the world (in our case Canvas) bounds and execute the function bound to the <code>onOutOfBounds</code> event. Inside it, when you click on the alert, the page will be reloaded so you can play again.</p>
+
+<h2 id="Compare_your_code">Compare your code</h2>
+
+<p>You can check the finished code for this lesson for yourself in the live demo below, and play with it to understand better how it works:</p>
+
+<p><iframe width="100%" height="350" src="https://jsfiddle.net/end3r/ddp3s81v/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe></p>
+
+<h2 id="Next_steps">Next steps</h2>
+
+<p>Now when the basic gameplay is in place let's make it more interesting by introducing the bricks we can smash - it's time to <a href="http://end3r.github.io/Gamedev-Phaser-Content-Kit/tutorial/article09.html">build the brick field</a>.</p>
+
+</body>
+</html>

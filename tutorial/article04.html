@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Article 04: Move the ball</title>
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<h1>Gamedev Phaser Content Kit</h1>
+<h2>Article 04: Move the ball</h2>
+
+<p>We have our blue ball printed on screen, but it's doing nothing. It would be cool to make it move somehow. Remember the <code>update</code> function and its definition? The code inside it is executed on every frame, so it's a perfect place to put the code that will update the ball's position on screen:</p>
+
+<pre class="brush: js">
+function update() {
+    ball.x += 1;
+    ball.y += 1;
+}
+</pre>
+
+<p>The code above will add 1 to <code>x</code> and <code>y</code> representing the position of the ball on screen, on each frame. That's it, the ball is rolling!</p>
+
+<h2 id="Compare_your_code">Compare your code</h2>
+
+<p>You can check the finished code for this lesson for yourself in the live demo below, and play with it to understand better how it works:</p>
+
+<p><iframe width="100%" height="350" src="https://jsfiddle.net/end3r/ug76ecbf/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe></p>
+
+<h2 id="Next_steps">Next steps</h2>
+
+<p>Now the next step would be to add some basic collision detection, so our ball can bounce off the walls. We could write down the JavaScript code that check all the walls against our ball and change its direction accordingly. It would take some lines of code and complicate it, even more if we want to add paddle and bricks collisions in the next steps, but we can take the advantage of using the Phaser framework and do it nice and easy. To do that though we need to introduce <a href="http://end3r.github.io/Gamedev-Phaser-Content-Kit/tutorial/article05.html">physics</a> first.</p>
+
+
+
+</body>
+</html>

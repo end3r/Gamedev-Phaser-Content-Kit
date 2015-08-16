@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Article 16: Randomizing gameplay</title>
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<h1>Gamedev Phaser Content Kit</h1>
+<h2>Article 16: Randomizing gameplay</h2>
+
+<p>Our game appears to be completed, but if you look close enough you'll notice that the ball is bouncing off the paddle on the same angle throughout the whole gameplay. You can predict and remember where it will go the more you play, which isn't very helpful in terms of high replayability. To fix that we can change the ball's velocity depending on the exact spot it hits the paddle:</p>
+
+<pre class="brush: js">
+function ballHitPaddle(ball, paddle) {
+    ball.animations.play('wobble');
+    ball.body.velocity.x = -1*5*(paddle.x-ball.x);
+}</pre>
+
+<p>It's a little bit of magic - the new velocity is higher the bigger distance there is between the center of the paddle and the place where the ball hits it. Also, the direction (left or right) is determined by that value - if the ball hits the left side of the paddle, it will bounce left and hitting the right side will bounce it to the right. It ended up that way because of a little bit of experiments with the given values, you can change them on your own and see what happens.</p>
+
+<h2 id="Compare_your_code">Compare your code</h2>
+
+<p>You can check the finished code for this lesson for yourself in the live demo below, and play with it to understand better how it works:</p>
+
+<p><iframe width="100%" height="350" src="https://jsfiddle.net/end3r/gk6mpsu2/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe></p>
+
+<h2 id="Summary">Summary</h2>
+
+<p>You've finished all the lessons - congratulations! By this point you would have learnt the basics of Phaser and the logic behind simple 2D games.</p>
+
+<p>You can do a lot more in the game, add whatever you feel would be the best. It's a basic intro scratching the surface of the countless helpful methods that Phaser provide. Be sure the check the ever growing list of <a href="http://examples.phaser.io/">examples</a> and the <a href="http://docs.phaser.io/">official documentation</a>, and visit the <a href="http://www.html5gamedevs.com/forum/14-phaser/">HTML5 Gamedevs forums</a> if you ever need any help.</p>
+
+<p>You could also go back to <a href="http://end3r.github.io/Gamedev-Phaser-Content-Kit/">this tutorial series' index page</a>.</p>
+
+</body>
+</html>

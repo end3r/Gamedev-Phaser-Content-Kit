@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Article 06: Bounce off the walls</title>
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<h1>Gamedev Phaser Content Kit</h1>
+<h2>Article 06: Bounce off the walls</h2>
+
+<p>Now when the physics are introduced, we can start implementing collision detection into the game - first comes the walls. The easiest way to do it is to tell the framework that we want to treat boundaries of the Canvas element as walls and bounce the ball off of them. Add this line right after the place where we enabled the physics for the ball:</p>
+
+<pre class="brush: js">
+ball.body.collideWorldBounds = true;
+</pre>
+
+<p>Now the ball stops at the edge of the screen instead of disappearing, but it doesn't look like bouncing. To make it work we have to set its bounciness:</p>
+
+<pre class="brush: js">
+ball.body.bounce.set(1);
+</pre>
+
+<p>Now it works as expected - the ball bounces off all the walls and moves inside the world, our Canvas area.</p>
+
+<h2 id="Compare_your_code">Compare your code</h2>
+
+<p>You can check the finished code for this lesson for yourself in the live demo below, and play with it to understand better how it works:</p>
+
+<p><iframe width="100%" height="350" src="https://jsfiddle.net/end3r/d9qu2c0t/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe></p>
+
+<h2 id="Next_steps">Next steps</h2>
+
+<p>It looks nice already, but we can't control the game in any way - it's the high time to introduce <a href="http://end3r.github.io/Gamedev-Phaser-Content-Kit/tutorial/article07.html">player paddle and controls</a>.</p>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Article 07: Player paddle and controls</title>
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<h1>Gamedev Phaser Content Kit</h1>
+<h2>Article 07: Player paddle and controls</h2>
+
+<p>We have the ball moving and bouncing off the walls, but it gets boring after some time. There's no interactivity, we can't do anything with the ball. It feels more like a movie than a game. We need a way to introduce the gameplay, so let's create the paddle that we will be able to move and use to hit and bounce the ball. From the framework point of view the paddle is very similar to the ball - we need a variable, load the image, and then do the magic.</p>
+
+<p>First, add the <code>paddle</code> variable we will be using in our game, right after the <code>ball</code> variable:</p>
+
+<pre class="brush: js">
+var ball;
+var paddle;
+</pre>
+
+<p>Then, in the <code>preload</code> function, load the <code>paddle</code> image:</p>
+
+<pre class="brush: js">
+function preload() {
+    // ...
+    game.load.image('ball', 'img/ball.png');
+    game.load.image('paddle', 'img/paddle.png');
+}
+</pre>
+
+<p>After that, we can init our paddle in the <code>create</code> function:</p>
+
+<pre class="brush: js">
+paddle = game.add.sprite(game.world.width*0.5, game.world.height-5, 'paddle');
+</pre>
+
+<p>We can use the <code>world.width</code> and <code>world.height</code> values to position the paddle exactly where we want it: <code>game.world.width*0.5</code> will be right in the middle of the screen. In our case the world is the same as the Canvas, but for other types of games, like side-scrollers for example, you can tinker with it and create interesting effects.</p>
+
+<p>As you probably noticed the paddle is not exactly in the middle. Why? Because the anchor from which the position is calculated always starts from the top left edge of the object. We can change that to have the anchor in the middle of the paddle's width and at the bottom of it's height, so it's easier to position against the bottom edge:</p>
+
+<pre class="brush: js">
+paddle.anchor.set(0.5,1);
+</pre>
+
+<p>The paddle is positioned right where we wanted it to be. Now, to make it collide with the ball we have to enable physics. Continue adding the code in the <code>create</code> function:</p>
+
+<pre class="brush: js">
+game.physics.enable(paddle, Phaser.Physics.ARCADE);
+</pre>
+
+<p>And then the magic happens - the framework will take care of checking the collision detection on every frame. To do that, just add the <code>collide</code> method to the <code>update</code> function:</p>
+
+<pre class="brush: js">
+function update() {
+    game.physics.arcade.collide(ball, paddle);
+}
+</pre>
+
+<p>The first parameter is one of the objects, in our case the ball, and the second is the paddle. It works, but not quite as we expected it to work - when the ball hits the paddle, the paddle fall off the screen! All we want is the ball bouncing off the paddle and the paddle staying in the same place. We can set the <code>body</code> of the paddle to be <code>immovable</code>, so the ball won't move it when it hits it. Add that line at the bottom of the <code>create</code> function:</p>
+
+<pre class="brush: js">
+paddle.body.immovable = true;
+</pre>
+
+<p>Now it works! The next problem is - we can't move it. To do that we can use the input (whether mouse or touch) and set the paddle position to where the <code>input</code> position is. Add the next line to the <code>update</code> function:</p>
+
+<pre class="brush: js">
+function update() {
+    game.physics.arcade.collide(ball, paddle);
+    paddle.x = game.input.x;
+}
+</pre>
+
+<p>Now on every new frame the paddle's <code>x</code> position will adjust accordingly to the input's <code>x</code> position. But when we start the game, the position of the paddle is not in the middle. It's because the input position is not yet defined. To fix that we can set the default position in the middle of the screen if it's not available:</p>
+
+<pre class="brush: js">
+paddle.x = game.input.x || game.world.width*0.5;
+</pre>
+
+<p>It works as expected.</p>
+
+<h2 id="Compare_your_code">Compare your code</h2>
+
+<p>You can check the finished code for this lesson for yourself in the live demo below, and play with it to understand better how it works:</p>
+
+<p><iframe width="100%" height="350" src="https://jsfiddle.net/end3r/ca7fxr1f/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe></p>
+
+<h2 id="Next_steps">Next steps</h2>
+
+<p>We can move the paddle and bounce off the ball, but what's the point if the ball is bouncing off the bottom edge of the screen anyway? Let's introduce the possibility of losing - a <a href="http://end3r.github.io/Gamedev-Phaser-Content-Kit/tutorial/article08.html">game over</a> logic.</p>
+
+</body>
+</html>

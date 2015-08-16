@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Article 02: Scaling</title>
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<h1>Gamedev Phaser Content Kit</h1>
+<h2>Article 02: Scaling</h2>
+
+<p>We can make the game scale on any mobile device right at the beginning, so we don't have to worry about it later. That way it doesn't matter what the screen size there is - the game will adjust accordingly. There's a special <code>scale</code> object available in Phaser with a few handy methods and variables:</p>
+
+<pre class="brush: js">
+function preload() {
+    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    game.scale.pageAlignHorizontally = true;
+    game.scale.pageAlignVertically = true;
+}
+</pre>
+
+<p>The <code>scaleMode</code> have a few different options on how the Canvas can be scaled:</p>
+
+<ul>
+ <li>NO_SCALE</li>
+ <li>EXACT_FIT</li>
+ <li>SHOW_ALL</li>
+ <li>RESIZE</li>
+ <li>USER_SCALE</li>
+</ul>
+
+<p>The first one, <code>NO_SCALE</code> does exactly that - nothing is scaled. The <code>EXACT_FIT</code> mode scales the Canvas to fill all the available space both vertically and horizontally, but it's not keeping the aspect ratio. The <code>SHOW_ALL</code> mode is something we will use as it scales the Canvas, but keeps the aspect ratio untouched, so the images won't be skewed like in the previous mode. There might be black stripes visible on the edges of the screen, but we can live with that. The <code>RESIZE</code> mode is a little bit more complicated as it creates the Canvas with the size of the available width and height, so you have to place the objects inside your game dynamically, which might be confusing at the beginning. The <code>USER_SCALE</code> is an extra mode that allows you to have custom dynamic scaling, calculating the size, scale and ratio on your own.</p>
+
+<p>Two other lines of code in the preload function are responsible for aligning the Canvas element horizontally and vertically, so it is always centered on screen no matter how much space it take.</p>
+
+<p>We can also add the background color to our Canvas, so it won't stay black. The <code>stage</code> object have the <code>backgroundColor</code> property that we can set using the CSS color definition syntax:</p>
+
+<pre class="brush: js">
+game.stage.backgroundColor = '#eee';
+</pre>
+
+<h2 id="Compare_your_code">Compare your code</h2>
+
+<p>You can check the finished code for this lesson for yourself in the live demo below, and play with it to understand better how it works:</p>
+
+<p><iframe width="100%" height="250" src="https://jsfiddle.net/end3r/a6rjb2b3/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe></p>
+
+<h2 id="Next_steps">Next steps</h2>
+
+<p>Now we've set up the scaling, so let's continue to the third lesson and work out how to <a href="https://end3r.github.io/Gamedev-Phaser-Content-Kit/tutorial/article03.html">load the assets and print them on screen</a>.</p>
+
+</body>
+</html>

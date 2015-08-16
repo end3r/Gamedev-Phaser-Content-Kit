@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Article 13: Extra lives</title>
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<h1>Gamedev Phaser Content Kit</h1>
+<h2>Article 13: Extra lives</h2>
+
+<p>We can make the game enjoyable for longer by adding lives. If the player lose one life he can continue playing until he runs out of them. Add the variables we will need for lives and the text message that will be shown on screen when the player lose one of his lives:</p>
+
+<pre class="brush: js">
+var lives = 3;
+var livesText;
+var lifeLostText;
+</pre>
+
+<p>Defining the texts look like something we already did in <a href="https://developer.mozilla.org/en-US/docs/Games/Workflows/2D_Breakout_game_Phaser/The_score">the score</a> lesson:</p>
+
+<pre class="brush: js">
+scoreText = game.add.text(5, 5, 'Points: 0', { font: '18px Arial', fill: '#0095DD' });
+livesText = game.add.text(game.world.width-5, 5, 'Lives: '+lives, { font: '18px Arial', fill: '#0095DD' });
+livesText.anchor.set(1,0);
+lifeLostText = game.add.text(game.world.width*0.5, game.world.height*0.5, 'Life lost, click to continue', { font: '18px Arial', fill: '#0095DD' });
+lifeLostText.anchor.set(0.5);
+lifeLostText.visible = false;
+</pre>
+
+<p>The <code>lifeText</code> object looks very similar to the <code>scoreText</code> one - have a position on the screen, the actual text and the font styling. It is also anchored on its top right edge to align properly with the screen.</p>
+
+<p>The <code>lifeLostText</code> will be shown only when the life will be lost, so its visibility is set to <code>false</code> at the beginning. Its anchor is set in the middle of the text to show it in the center of the screen.</p>
+
+<p>As you probably noticed we're using the same styling for all three texts: <code>scoreText</code>, <code>livesText</code> and <code>lifeLostText</code>. If we ever want to change the font size or color we will have to do it in multiple places. To make it easier for us to maintain in the future we can create a separate variable that will hold our styling, let's call it <code>textStyle</code>:</p>
+
+<pre class="brush: js">
+textStyle = { font: '18px Arial', fill: '#0095DD' };
+</pre>
+
+<p>We can use this variable when creating the texts:</p>
+
+<pre class="brush: js">
+scoreText = game.add.text(5, 5, 'Points: 0', textStyle);
+livesText = game.add.text(game.world.width-5, 5, 'Lives: '+lives, textStyle);
+livesText.anchor.set(1,0);
+lifeLostText = game.add.text(game.world.width*0.5, game.world.height*0.5, 'Life lost, click to continue', textStyle);
+lifeLostText.anchor.set(0.5);
+lifeLostText.visible = false;
+</pre>
+
+<p>This way changing the font in one variable will apply the changes in every place it is used.</p>
+
+<p>To implement lives in our game, let's first change the ball's function bound to the <code>onOutOfBounds</code> event. Instead of executing the function right away and showing the alert:</p>
+
+<pre class="brush: js">
+<s>ball.events.onOutOfBounds.add(function(){
+    alert('Game over!');
+    location.reload();
+}, this);</s>
+</pre>
+
+<p>We will assign new function called <code>ballLeaveScreen</code>:</p>
+
+<pre class="brush: js">
+ball.events.onOutOfBounds.add(ballLeaveScreen, this);
+</pre>
+
+<p>We want to decrease the number of lives every time the ball leaves the Canvas. Add that function at the end of our code:</p>
+
+<pre class="brush: js">
+function ballLeaveScreen() {
+    lives--;
+    if(lives) {
+        livesText.setText('Lives: '+lives);
+        lifeLostText.visible = true;
+        ball.reset(game.world.width*0.5, game.world.height-25);
+        paddle.reset(game.world.width*0.5, game.world.height-5);
+        game.input.onDown.addOnce(function(){
+            lifeLostText.visible = false;
+            ball.body.velocity.set(150, -150);
+        }, this);
+    }
+    else {
+        alert('You lost, game over!');
+        location.reload();
+    }
+}
+</pre>
+
+<p>Instead of instantly printing out the alert when you lose the life, we will subtract one life from the current number and check if it's a non-zero value. If yes, then the player still have some lives left and can continue to play - he will see the life lost message, the ball's and paddle's positions will be reset on screen and on the next input (click or touch) the message will be hidden and the ball will start to move.</p>
+
+<p>If the number of available lives will reach zero, then the game is over and the proper alert message will be shown.</p>
+
+<h2 id="Compare_your_code">Compare your code</h2>
+
+<p>You can check the finished code for this lesson for yourself in the live demo below, and play with it to understand better how it works:</p>
+
+<p><iframe width="100%" height="350" src="https://jsfiddle.net/end3r/k0yw50sz/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe></p>
+
+<h2 id="Next_steps">Next steps</h2>
+
+<p>Lives made the game more forgiving - if you lose one life, you still have two more left and can continue to play. Now let's expand the look and feel of the game by adding <a href="http://end3r.github.io/Gamedev-Phaser-Content-Kit/tutorial/article14.html">animations and tweens</a>.</p>
+
+</body>
+</html>

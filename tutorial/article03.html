@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Article 03: Load the assets and print them on screen</title>
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<h1>Gamedev Phaser Content Kit</h1>
+<h2>Article 03: Load the assets and print them on screen</h2>
+
+<p>Our game's idea is to have the ball rolling on the screen bouncing off the paddle, hitting the bricks and collecting the points. Let's start with creating the JavaScript variable for the ball - add it between the <code>game</code> initialization and the <code>preload</code> function:</p>
+
+<pre class="brush: js">
+var game = new Phaser.Game(480, 320, Phaser.AUTO, null, {
+    preload: preload, create: create, update: update
+});
+
+var ball;
+
+function preload() {
+    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    game.scale.pageAlignHorizontally = true;
+    game.scale.pageAlignVertically = true;
+    game.stage.backgroundColor = '#eee';
+}
+function create() {
+}
+function update() {
+}
+</pre>
+
+<div class="summary">
+<p>Note: for the sake of this tutorial we will use global variables. The purpose of the tutorial is to teach Phaser-specific approach to game development and don't enforce any of the available code style guides which are subjective to preferences of every single developer.</p>
+</div>
+
+<p>Loading and printing the images on our Canvas is a lot easier using Phaser than doing that in pure JavaScript. To load the asset, we will use the <code>game</code> object created by Phaser and execute the <code>load.image</code> method inside the <code>preload</code> function:</p>
+
+<pre class="brush: js">
+function preload() {
+    // ...
+    game.load.image('ball', 'img/ball.png');
+}
+</pre>
+
+<p>The first parameter is the name of the asset we want to have - it will be used across our game, so it would be great to give it a proper meaning. The second parameter is the relative path to the graphic asset. In our case we will load the image of the blue ball that will be used later in the game to destroy blocks and earn points.</p>
+
+<p>Now, to show it on the screen we will use another Phaser method called <code>add.sprite</code> in the <code>create</code> function:</p>
+
+<pre class="brush: js">
+function create() {
+    ball = game.add.sprite(50, 50, 'ball');
+}
+</pre>
+
+<p>It will add the ball and render it on the screen. The first two parameters are the top and left positions on the screen and the third one is the name of the asset we defined earlier. That's it - if you launch the <code>index.html</code> file you will see the image already loaded and rendered on Canvas!</p>
+
+<p>[IMG_OF_A_BALL]</p>
+
+<h2 id="Compare_your_code">Compare your code</h2>
+
+<p>You can check the finished code for this lesson for yourself in the live demo below, and play with it to understand better how it works:</p>
+
+<p><iframe width="100%" height="350" src="https://jsfiddle.net/end3r/cmzfdvze/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe></p>
+
+<h2 id="Next_steps">Next steps</h2>
+
+<p>Printing out the ball was easy, so let's try to <a href="http://end3r.github.io/Gamedev-Phaser-Content-Kit/tutorial/article04.html">move the ball</a> on screen.</p>
+
+</body>
+</html>

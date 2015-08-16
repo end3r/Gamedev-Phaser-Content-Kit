@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Article 09: Build the brick field</title>
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<h1>Gamedev Phaser Content Kit</h1>
+<h2>Article 09: Build the brick field</h2>
+
+<p>Building the brick field is a little bit more complicated than adding a single objects to the screen. It's still easier with Phaser than doing that in pure JavaScript though. We will create a group of bricks and print them on screen in a loop. First, let's define the needed variables:</p>
+
+<pre class="brush: js">
+var bricks;
+var newBrick;
+var brickInfo;
+</pre>
+
+<p>The <code>bricks</code> variable will be used to create a group, <code>newBrick</code> a new object added to the group on every iteration of the loop and <code>brickInfo</code> will store all the data we need. Next, let's load the image of the brick:</p>
+
+<pre class="brush: js">
+function preload() {
+    // ...
+    game.load.image('brick', 'img/brick.png');
+}
+</pre>
+
+<p>We will place all the code inside the <code>initBricks</code> function to keep it separated from the rest of the code. Add <code>initBricks</code> at the end of the <code>create</code> function:</p>
+
+<pre class="brush: js">
+function create(){
+    // ...
+    initBricks();
+}
+</pre>
+
+<p>Write down the <code>initBricks</code> function's body at the end of our games's code, just before the closing &lt;/script&gt; tag. Let's start with <code>brickInfo</code> - it will come in handy really quick:</p>
+
+<pre class="brush: js">
+function initBricks() {
+    brickInfo = {
+        width: 50,
+        height: 20,
+        count: {
+            row: 7,
+            col: 3
+        },
+        offset: {
+            top: 50,
+            left: 60
+        },
+        padding: 10
+    }
+}
+</pre>
+
+<p>This <code>brickInfo</code> object will hold all the information we need: width and height of the single brick, number of rows and columns of bricks we will see on screen, top and left starting point where we begin to print the bricks on screen and the padding between single bricks. Now, let's start creating the bricks themselves - add the empty group first:</p>
+
+<pre class="brush: js">
+bricks = game.add.group();
+</pre>
+
+<p>We can loop through the rows and columns to create new brick on every iteration:</p>
+
+<pre class="brush: js">
+for(c=0; c&lt;brickInfo.count.col; c++) {
+    for(r=0; r&lt;brickInfo.count.row; r++) {
+        // create new brick and add it to the group
+    }
+}
+</pre>
+
+<p>That way we will create the exact number of bricks we need and have them all in a group.</p>
+
+<pre class="brush: js">
+for(c=0; c&lt;brickInfo.count.col; c++) {
+    for(r=0; r&lt;brickInfo.count.row; r++) {
+        var brickX = 0;
+        var brickY = 0;
+        newBrick = game.add.sprite(brickX, brickY, 'brick');
+        game.physics.enable(newBrick, Phaser.Physics.ARCADE);
+        newBrick.body.immovable = true;
+        newBrick.anchor.set(0.5);
+        bricks.add(newBrick);
+    }
+}
+</pre>
+
+<p>We're looping through the rows and columns to create the new brick and place it on the screen - at coordinates (0,0) for now, but we will calculate the proper positions in a minute. The newly created brick is enabled for Arcade physics engine, it's body is set to be immovable (so it won't move when hit by the ball), we're also setting the anchor to be in the middle and adding the brick to the group.</p>
+
+<p>The problem is that we're painting all bricks in one place, at coordinates (0,0). What we need to do is figure out a way to have x and y position of new brick in each loop iteration:</p>
+
+<pre class="brush: js">
+var brickX = (r*(brickInfo.width+brickInfo.padding))+brickInfo.offset.left;
+var brickY = (c*(brickInfo.height+brickInfo.padding))+brickInfo.offset.top;
+</pre>
+
+<p>Each <code>brickX</code> position is worked out as <code>brickInfo.width</code> plus <code>brickInfo.padding</code>, multiplied by the row number, <code>r</code>, plus the <code>brickInfo.offset.left</code>; the logic for the <code>brickY</code> is identical except that it uses the values for column number, <code>c</code>, <code>brickInfo.height</code>, and <code>brickInfo.offset.top</code>. Now every single brick can be placed in its correct place row and column, with padding between each brick, drawn at an offset from the left and top Canvas edges.</p>
+
+<p>Here is the complete code for the <code>initBricks</code> function:</p>
+
+<pre class="brush: js">
+function initBricks() {
+    brickInfo = {
+        width: 50,
+        height: 20,
+        count: {
+            row: 7,
+            col: 3
+        },
+        offset: {
+            top: 50,
+            left: 60
+        },
+        padding: 10
+    }
+    bricks = game.add.group();
+    for(c=0; c&lt;brickInfo.count.col; c++) {
+        for(r=0; r&lt;brickInfo.count.row; r++) {
+            var brickX = (r*(brickInfo.width+brickInfo.padding))+brickInfo.offset.left;
+            var brickY = (c*(brickInfo.height+brickInfo.padding))+brickInfo.offset.top;
+            newBrick = game.add.sprite(brickX, brickY, 'brick');
+            game.physics.enable(newBrick, Phaser.Physics.ARCADE);
+            newBrick.body.immovable = true;
+            newBrick.anchor.set(0.5);
+            bricks.add(newBrick);
+        }
+    }
+}
+</pre>
+
+<p>Everything works fine as expected - the bricks are printed on screen in an evenly distances from each other.</p>
+
+<p>[IMG_OF_BRICKS]</p>
+
+<h2 id="Compare_your_code">Compare your code</h2>
+
+<p>You can check the finished code for this lesson for yourself in the live demo below, and play with it to understand better how it works:</p>
+
+<p><iframe width="100%" height="350" src="https://jsfiddle.net/end3r/f09oozyg/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe></p>
+
+<h2 id="Next_steps">Next steps</h2>
+
+<p>Something is missing though. The ball goes through the bricks without stopping - we need proper <a href="http://end3r.github.io/Gamedev-Phaser-Content-Kit/tutorial/article10.html">collision detection</a>.</p>
+
+</body>
+</html>

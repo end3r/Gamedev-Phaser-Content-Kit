@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Article 05: Physics</title>
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<h1>Gamedev Phaser Content Kit</h1>
+<h2>Article 05: Physics</h2>
+
+<p>For the proper use of collision detection between objects in our game we will need to have physics. Phaser is bundled with three different physics engines: Arcade Physics, P2 and Ninja Physics with the fourth Box2D available as a commercial plugin. For simple games, which in our case is the Breakout game, we can use the Arcade Physics engine. We don't need any heavy geometry calculations, after all it's just a ball bouncing off the walls and bricks.</p>
+
+<p>First, let's initialize the Arcade Physics in our game. Write down the <code>physics.startSystem</code> method at the beginning of the <code>create</code> function:</p>
+
+<pre class="brush: js">
+game.physics.startSystem(Phaser.Physics.ARCADE);
+</pre>
+
+<p>Next, we need to enable our ball for the physics system - Phaser objects are not enabled for that by default:</p>
+
+<pre class="brush: js">
+game.physics.enable(ball, Phaser.Physics.ARCADE);
+</pre>
+
+<p>Then, if we want to move our ball on the screen, we can set <code>velocity</code> to its <code>body</code>:</p>
+
+<pre class="brush: js">
+ball.body.velocity.set(150, 150);
+</pre>
+
+<p>Remember to remove our old method of adding values to <code>x</code> and <code>y</code> in the <code>update</code> function:</p>
+
+<pre class="brush: js">
+function update() {
+<s>    ball.x += 1;</s>
+<s>    ball.y += 1;</s>
+}
+</pre>
+
+<p>All the code should look like this:</p>
+
+<pre class="brush: js">
+var ball;
+
+function preload() {
+    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    game.scale.pageAlignHorizontally = true;
+    game.scale.pageAlignVertically = true;
+    game.stage.backgroundColor = '#eee';
+    game.load.image('ball', 'img/ball.png');
+}
+
+function create() {
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+    ball = game.add.sprite(50, 50, 'ball');
+    game.physics.enable(ball, Phaser.Physics.ARCADE);
+    ball.body.velocity.set(150, 150);
+}
+
+function update() {
+}
+</pre>
+
+<p>The ball is now moving constantly in given direction, because the physics engine have the gravity and friction defaults set to zero. Adding gravity would result in the ball falling down while friction would eventually stop the ball after some time.</p>
+
+<h2 id="Compare_your_code">Compare your code</h2>
+
+<p>You can check the finished code for this lesson for yourself in the live demo below, and play with it to understand better how it works:</p>
+
+<p><iframe width="100%" height="350" src="https://jsfiddle.net/end3r/g6osj20x/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe></p>
+
+<h2 id="Next_steps">Next steps</h2>
+
+<p>Now we can move to the next lesson and see how to make the ball <a href="http://end3r.github.io/Gamedev-Phaser-Content-Kit/tutorial/article06.html">bounce off the walls</a>.</p>
+
+
+</body>
+</html>

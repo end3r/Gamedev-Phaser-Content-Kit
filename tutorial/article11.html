@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Article 11: The score</title>
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<h1>Gamedev Phaser Content Kit</h1>
+<h2>Article 11: The score</h2>
+
+<p>Having a score can boost player's interest in the game - you can try to beat your own or your friend's highscore and play the game again and again. To make it work in our game we will use separate variable for storing the score and Phaser's text element to print it out on the screen. Add those two variables right after the previously defined ones:</p>
+
+<pre class="brush: js">
+// ...
+var scoreText;
+var score = 0;
+</pre>
+
+<p>Now add this line at the end of the <code>create</code> function:</p>
+
+<pre class="brush: js">
+scoreText = game.add.text(5, 5, 'Points: 0', { font: '18px Arial', fill: '#0095DD' });
+</pre>
+
+<p>As you can see the text element can take four parameters: x and y position, the actual text that will be rendered and the font style - the last parameter looks very similar to CSS styling. In our case the score text will be blue and will have 18 pixels using the Arial font. We will increase the number of points every time the ball hits the brick and update the text with the current value using the <code>setText</code> method:</p>
+
+<pre class="brush: js">
+function ballHitBrick(ball, brick) {
+    brick.kill();
+    score += 10;
+    scoreText.setText('Points: '+score);
+}
+</pre>
+
+<p>That's it - the score is now added on every hit and updated on the screen.</p>
+
+<h2 id="Compare_your_code">Compare your code</h2>
+
+<p>You can check the finished code for this lesson for yourself in the live demo below, and play with it to understand better how it works:</p>
+
+<p><iframe width="100%" height="350" src="https://jsfiddle.net/end3r/qy5w8xu9/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe></p>
+
+<h2 id="Next_steps">Next steps</h2>
+
+<p>We have the score already, but what's the point of playing and keeping the score if you can't win? Let's see how we can make it work to <a href="http://end3r.github.io/Gamedev-Phaser-Content-Kit/tutorial/article12.html">win the game</a>.</p>
+
+</body>
+</html>

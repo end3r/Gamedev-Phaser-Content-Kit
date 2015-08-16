@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Article 12: Win the game</title>
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<h1>Gamedev Phaser Content Kit</h1>
+<h2>Article 12: Win the game</h2>
+
+<p>Implementing winning in our game is quite easy: if you happen to destroy all the bricks, then you win:</p>
+
+<pre class="brush: js">
+function ballHitBrick(ball, brick) {
+    brick.kill();
+    score += 10;
+    scoreText.setText('Points: '+score);
+    if(score === brickInfo.count.row*brickInfo.count.col*10) {
+        alert('You won the game, congratulations!');
+        location.reload();
+    }
+}
+</pre>
+
+<p>If your score is the same as the number of bricks initially available on the screen - times 10 as you score 10 points instead of 1 for every brick - then show the proper message.</p>
+
+<h2 id="Compare_your_code">Compare your code</h2>
+
+<p>You can check the finished code for this lesson for yourself in the live demo below, and play with it to understand better how it works:</p>
+
+<p><iframe width="100%" height="350" src="https://jsfiddle.net/end3r/6da0L2uz/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe></p>
+
+<h2 id="Next_steps">Next steps</h2>
+
+<p>Both losing and winning is already implemented, so the core gameplay of our game is finished. Now we can add something extra, like three <a href="http://end3r.github.io/Gamedev-Phaser-Content-Kit/tutorial/article13.html">lives</a> instead of one.</p>
+
+</body>
+</html>

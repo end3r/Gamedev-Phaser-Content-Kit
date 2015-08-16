@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Article 10: Collision detection</title>
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<h1>Gamedev Phaser Content Kit</h1>
+<h2>Article 10: Collision detection</h2>
+
+<p>I hope you survived the previous lesson, it was quite intense. Now onto the next challenge - the collision detection between the ball and the bricks. Luckily enough we can use the physics engine to check collisions not only between single objects (like the ball and the paddle), but also between an object and the group. This makes everything a lot easier:</p>
+
+<pre class="brush: js">
+function update() {
+    game.physics.arcade.collide(ball, paddle);
+    game.physics.arcade.collide(ball, bricks, ballHitBrick);
+    paddle.x = game.input.x || game.world.width*0.5;
+}
+</pre>
+
+<p>The ball's position is calculated against the positions of all the bricks in the group. The third, optional parameter is the function executed when the collision occurs. Create that function just before the closing &lt;/script&gt; tag:</p>
+
+<pre class="brush: js">
+function ballHitBrick(ball, brick) {
+    brick.kill();
+}
+</pre>
+
+<p>As you can see thanks to Phaser there are two parameters passed to the function - first one is the ball which we explicitly defined in the collide method, and the second one is the single brick from the bricks group that the ball is colliding with. When we have the reference to it, we can then kill the brick which will remove it from the screen.</p>
+
+<p>Sorry to disappoint you if you expected to have more calculations for collision detection on your own if you <a href="https://developer.mozilla.org/en-US/docs/Games/Workflows/2D_Breakout_game_pure_JavaScript/Collision_detection">coded it in pure JavaScript</a>. That's the beauty of using the framework - you can leave a lot of boring code to it, just like in our case, and focus on the most fun and interesting parts of making a game.</p>
+
+<h2 id="Compare_your_code">Compare your code</h2>
+
+<p>You can check the finished code for this lesson for yourself in the live demo below, and play with it to understand better how it works:</p>
+
+<p><iframe width="100%" height="350" src="https://jsfiddle.net/end3r/956uxr3n/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe></p>
+
+<h2 id="Next_steps">Next steps</h2>
+
+<p>We can hit the bricks and remove them, which is a nice addition to the gameplay already. It would be even better to count the destroyed bricks and keep it as <a href="http://end3r.github.io/Gamedev-Phaser-Content-Kit/tutorial/article11.html">the score</a>.</p>
+
+</body>
+</html>

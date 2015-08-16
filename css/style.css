@@ -24,6 +24,7 @@ pre {
 	font-size: 12px;
 	line-height: 14px;
 	border-radius: 5px;
+	overflow: auto;
 }
 code {
 	font-size: 14px;

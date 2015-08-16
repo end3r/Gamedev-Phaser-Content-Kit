@@ -1,0 +1,419 @@
+<!DOCTYPE HTML>
+<!-- <html lang="en-US"> -->
+<html lang="en-US" class="fade">
+<!-- 
+  ^ a class of "fade" makes slides fade smoothly into one another
+ -->
+<!-- <html lang="en-US" class="nonumbers"> -->
+<!-- 
+  If you want no numbers on the slides add a "nonumbers" class 
+  to the HTML element.
+  Adding a class of "fade" will make slides fade into another. 
+-->
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Game Development</title>
+<!-- 
+  If you upload your slides to the web, ensure that you have 
+  a good title - this shows up in search results and social
+  media links
+ -->
+  <meta name="viewport" content="width=device-width, user-scalable=yes">
+  <link rel="stylesheet" href="themes/mozilla/styles/style.css">
+</head>
+<body class="list">
+  <header class="caption">
+    <h1>HTML5 Game Development</h1>
+    <p class="footer">
+      {Your name and details}
+    </p>
+  </header>
+  <aside class="talkdescription">
+    <p>This slide deck is using the shower system - roll over the previews to see the notes and click any slide to go into presentation mode. Then use keys to navigate. <button onclick="goFullScreen()">Go fullscreen</button></p>
+    <p class="abstract">
+       This set of slides is all about HTML5 game development - from the technology point of view and APIs, through tools, frameworks and sources of knowledge, Firefox OS and Marketplace, to distribution and monetisation. All you need to know about web gamedev.
+    </p>
+  </aside>
+
+<!-- 
+    Simply copy the whole block for each slide you want.
+  Special slides get extra classes. Each slide needs an ID 
+  to allow for bookmarking and target jumping.
+-->
+
+  <div id="cover" class="slide"><div>
+    <section>
+      <header><h2>HTML5 Game Development</h2></header>
+      <small class="byline">
+        {Firstname}, {Lastname}, {Conference}, {Location}, {date}
+      </small>
+      <footer class="notes">Say something about yourself and what you're going to talk about.</footer>
+    </section>
+  </div></div>
+
+<!-- end slide block -->
+
+  <div id="technology" class="slide"><div>
+    <section>
+      <header><h2>Technology?</h2></header>
+      <img style="width: 60%;" src="img/question.jpg" alt="Question" />
+      <p><span class="fragment">It's ready</span><span class="fragment">, seriously.</span></p>
+      <footer class="notes">Technology is ready. For the past few years there were issues with many things like performance, working offline, audio support or monetisation - all that is history. Today the only thing that holds you back from building great HTML5 games is your imagination.</footer>
+    </section>
+  </div></div>
+
+  <div id="webapi" class="slide"><div>
+    <section>
+      <header><h2>Web API</h2></header>
+      <img style="float: right; width: 60%;" src="img/dead-trigger-2.jpg" alt="Dead Trigger 2" />
+      <ul>
+        <li>Fullscreen</li>
+        <li>Pointer Lock</li>
+        <li>Gamepad</li>
+      </ul>
+      <footer class="notes">The are APIs that can make the web game look and work as a native one - run fullscreen without the address bar, hide the cursor with the Pointer Lock API, allow to play the game with the gamepad controller.</footer>
+    </section>
+  </div></div>
+
+  <div id="mobileapi" class="slide"><div>
+    <section>
+      <header><h2>Mobile API</h2></header>
+      <img style="float: right; width: 60%;" src="img/firefox-os-flame.png" alt="Firefox OS Flame" />
+      <ul>
+        <li>Vibration</li>
+        <li>Screen orientation</li>
+        <li>Battery status</li>
+        <li>WebSMS</li>
+        <li>Proximity sensor</li>
+      </ul>
+      <footer class="notes">There are also mobile APIs that do the same - help harness the power of hardware from within your game like the Vibration API, using Screen Orientation, or even being able to check the battery level or send SMS.</footer>
+    </section>
+  </div></div>
+
+  <div id="listofapis" class="slide"><div>
+    <section>
+      <header><h2>List of APIs</h2></header>
+      <p>WebTelephony, Vibration API, WebSMS, Idle API, Screen Orientation, Settings API, Power Management API, Mobile Connection API, TCP Socket API, Geolocation API, WiFi Information API, Device Storage API, Contacts API, Mouse Lock API, Open WebApps, WebBluetooth, Network Information API, Battery Status API, Alarm API, Browser API, Time&frasl;Clock API, Web Activities, Push Notifications API, Permissions API, WebFM API, FileHandle API, Network Stats API, WebPayment, IndexedDB, Archive API, Ambient light sensor, Proximity sensor, SystemXHR, ...</p>
+      <footer class="notes">The list of APIs is huge, but don't be intimidated by it - API can be very easy to use.</footer>
+    </section>
+  </div></div>
+
+  <div id="vibrationapi" class="slide"><div>
+    <section>
+      <header><h2>Vibration API</h2></header>
+      <pre><code>window.navigator.vibrate(200);</code></pre>
+      <footer class="notes">Vibration is the API that can be implemented in just a single line of code. By writing that line you make the device vibrate for the given amount of time (in miliseconds).</footer>
+    </section>
+  </div></div>
+
+  <div id="screenorientation" class="slide"><div>
+    <section>
+      <header><h2>Screen orientation</h2></header>
+      <pre>
+        <code>checkOrientation = function() {</code>
+        <code>  if(window.orientation == 0 || window.orientation == 180) {</code>
+        <code>    // "rotate your device"</code>
+        <code>  }</code>
+        <code>  else {</code>
+        <code>    // "keep playing"</code>
+        <code>  }</code>
+        <code>}</code>
+      </pre>
+      <footer class="notes">Screen Orientation is another interesting, easy to use API. If you have a game that can be played only in portrait or landscape modes you can check whether player holds the device in the correct orientation - if he isn't, you can show him the message to do so.</footer>
+    </section>
+  </div></div>
+
+  <div id="pagevisibility" class="slide"><div>
+    <section>
+      <header><h2>Page visibility</h2></header>
+      <pre>
+        <code>document.addEventListener("visibilitychange", function() {</code>
+        <code>  if(document.hidden) {</code>
+        <code>    // "app is not visible"</code>
+        <code>  }</code>
+        <code>  else {</code>
+        <code>    // "app is visible"</code>
+        <code>  }</code>
+        <code>});</code>
+      </pre>
+      <footer class="notes">Page Visibility API can be useful to check if the player is currently playing the game. If he moves to another tab in the browser and yours is not visible to him, you can do something in that case like for example turn off the sounds and turn them on when he returns.</footer>
+    </section>
+  </div></div>
+
+  <div id="tools" class="slide"><div>
+    <section>
+      <header><h2>Tools</h2></header>
+      <img style="width: 60%;" src="img/tools.jpg" alt="Tools" />
+      <p>Free, easy to use</p>
+      <footer class="notes">There are various tools to help you with game development. Most of them are free and easy to use. If you're a front-end developer you already know the tools and workflows and don't have to learn anything new.</footer>
+    </section>
+  </div></div>
+
+  <div id="writingjs" class="slide"><div>
+    <section>
+      <header><h2>Writing JavaScript code</h2></header>
+      <img style="width: 60%;" src="img/sublime.jpg" alt="Sublime Text 2" />
+      <p>Notepad, Sublime Text, Eclipse</p>
+      <footer class="notes">To write JavaScript code of your game you need an editor. It can be as plain and simple as a notepad. There are more advanced editors like Sublime Text and even IDEs like Eclipse. It really depends on your personal preferences.</footer>
+    </section>
+  </div></div>
+
+  <div id="testing" class="slide"><div>
+    <section>
+      <header><h2>Testing the game</h2></header>
+      <img style="width: 80%;" src="img/firebug.jpg" alt="Firebug" />
+      <p>Browser + dev tools</p>
+      <footer class="notes">You can test the game using the available tools - inside the browser, with Firebug or native development tools built into the browser.</footer>
+    </section>
+  </div></div>
+
+  <div id="phaser" class="slide"><div>
+    <section>
+      <header><h2>Phaser</h2></header>
+      <img style="width: 80%;" src="img/phaser.png" alt="Phaser" />
+      <p><a href="http://phaser.io/">phaser.io</a> - free, open sourced on GitHub</p>
+      <footer class="notes">The most popular framework for HTML5 game developers right now is Phaser. There's a huge community helping with the framework itself, writing articles and tutorials, building tools and editors. It is free, open sourced and is available on GitHub.</footer>
+    </section>
+  </div></div>
+
+  <div id="frameworks" class="slide"><div>
+    <section>
+      <header><h2>Frameworks</h2></header>
+      <img style="width: 80%;" src="img/html5gameengine.jpg" alt="HTML5 Game Engines list" />
+      <p><a href="http://html5gameengine.com/">html5gameengine.com</a></p>
+      <footer class="notes">There are many other interesting frameworks. You can check the website above - feel free to experiment with them and pick whatever suits you best.</footer>
+    </section>
+  </div></div>
+
+  <div id="compare" class="slide"><div>
+    <section>
+      <header><h2>Compare</h2></header>
+      <img style="width: 80%;" src="img/jsbreakouts.png" alt="JS Breakouts" />
+      <p><a href="http://www.jsbreakouts.org/">jsbreakouts.org</a></p>
+      <footer class="notes">You can also compare implementations of one given game in various frameworks to see differences between them and pick the one that have the best structure for you and your game.</footer>
+    </section>
+  </div></div>
+
+  <div id="knowledge" class="slide"><div>
+    <section>
+      <header><h2>Knowledge</h2></header>
+      <ul>
+        <li>Articles, tutorials and blogs</li>
+        <li>Demos, open sourced games, videos</li>
+        <li>Community at <a href="http://www.html5gamedevs.com/">html5gamedevs.com</a> forums</li>
+        <li>Meetups, conferences, competitions</li>
+      </ul>
+      <footer class="notes">Remember that there are many places to find knowledge - if you ever have any problems you can try to find the solution in other people's blog posts, articles or tutorials. You can learn more about things you're interested in and broaden your set of skills. You can tinker with demos and ask questions to your fellow developers live or online.</footer>
+    </section>
+  </div></div>
+
+  <div id="starter" class="slide"><div>
+    <section>
+      <header><h2>HTML5 Gamedev Starter</h2></header>
+      <img style="width: 100%;" src="img/starter.png" alt="HTML5 Gamedev Starter" />
+      <p><a href="http://html5devstarter.enclavegames.com/">html5devstarter.enclavegames.com</a></p>
+      <footer class="notes">There's an interesting website called HTML5 Gamedev Starter where you can find a huge list of link to resources about various aspects of gamedev: interesting frameworks, places with good articles, news, recommended distribution platforms, meetups and conferences worth attending and many more.</footer>
+    </section>
+  </div></div>
+
+  <div id="newsletter" class="slide"><div>
+    <section>
+      <header><h2>Gamedev.js Weekly newsletter</h2></header>
+      <img style="width: 90%;" src="img/screenshot-weekly.jpg" alt="Gamedev.js Weekly" />
+      <p><a href="http://gamedevjsweekly.com/">gamedevjsweekly.com</a></p>
+      <footer class="notes">If you don't have the time to follow the whole community you can subscribe yourself to the newsletter and receive weekly updates every Friday with the latest articles, tutorials, tools and resources.</footer>
+    </section>
+  </div></div>
+
+  <div id="firefoxos" class="slide"><div>
+    <section>
+      <header><h2>Firefox OS</h2></header>
+      <img style="float: right; width: 35%; border: 0; background: none; box-shadow: none;" src="img/fxos.png" alt="Firefox OS" />
+      <ul>
+        <li>Mobile OS written in JavaScript</li>
+        <li>Created and maintained by Mozilla</li>
+        <li>Open source, available on GitHub</li>
+        <li>Hardware platform for the mobile web</li>
+      </ul>
+      <footer class="notes">Firefox OS is the mobile operating system written entirely in JavaScript. It's the perfect hardware platform for HTML5 games. You have access to the APIs and functions of the phone directly from JavaScript.</footer>
+    </section>
+  </div></div>
+
+  <div id="webide" class="slide"><div>
+    <section>
+      <header><h2>WebIDE</h2></header>
+      <img style="float: right; width: 55%; border: 0; background: none; box-shadow: none;" src="img/webide.png" alt="WebIDE" />
+      <ul>
+        <li>Managing applications<br />and games</li>
+        <li>Editing environment</li>
+        <li>Firefox OS Simulator</li>
+        <li>Remote debugging</li>
+      </ul>
+      <footer class="notes">WebIDE is the tool built into the browser helping you manage games, edit their source code, test them in the Simulator and even debug remotely on an actual device.</footer>
+    </section>
+  </div></div>
+
+  <div id="publish" class="slide"><div>
+    <section>
+      <header><h2>Publish</h2></header>
+      <img style="width: 90%;" src="img/github.png" alt="GitHub" />
+      <p><a href="http://enclavegames.com/blog/2014/02/02/host-your-html5-games-on-github-pages/">Host your HTML5 games on GitHub Pages</a></p>
+      <footer class="notes">All you have to do to publish your game is a server - it's the same as with a usual web page. Even if you don't have one, you can use GitHub Pages for that.</footer>
+    </section>
+  </div></div>
+
+  <div id="distribute" class="slide"><div>
+    <section>
+      <header><h2>Distribute</h2></header>
+      <ul>
+        <li>Portals</li>
+        <li>Publishers</li>
+      </ul>
+      <footer class="notes">You can distribute your game to portals and publishers, so more people will know about your game.</footer>
+    </section>
+  </div></div>
+
+  <div id="multiplatform" class="slide"><div>
+    <section>
+      <header><h2>Multiplatform</h2></header>
+      <img style="width: 100%;" src="img/multiplatform.jpg" alt="Multiplatform" />
+      <footer class="notes">Remember about many various platforms your game can run when you implement it. Scale the Canvas to fill the screen or use multiple graphic assets.</footer>
+    </section>
+  </div></div>
+
+  <div id="native" class="slide"><div>
+    <section>
+      <header><h2>Native apps</h2></header>
+      <img style="width: 90%;" src="img/cocoonjs-export.png" alt="CocoonJS" />
+      <p><a href="http://phonegap.com/">Phonegap</a>, <a href="https://www.ludei.com/cocoonjs/">CocoonJS</a>, <a href="https://software.intel.com/en-us/html5/tools">Intel XDK</a>, <a href="http://impactjs.com/ejecta">Ejecta</a></p>
+      <footer class="notes">You can also push your HTML5 games to native stores with the help from tools that will package it into proper packages.</footer>
+    </section>
+  </div></div>
+
+  <div id="marketplace" class="slide"><div>
+    <section>
+      <header><h2>Prepare your game<br/>for Firefox Marketplace</h2></header>
+      <p><a href="https://developer.mozilla.org/en-US/docs/Web/Apps/Manifest">Manifest file</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/Apps/Publishing/Submitting_an_app">submit form</a></li>
+      </p>
+      <footer class="notes">It's very easy to publish your game in the Firefox Marketplace - all you need is the manifest file and the submit form.</footer>
+    </section>
+  </div></div>
+
+  <div id="manifest" class="slide"><div>
+    <section>
+      <header><h2>Manifest file</h2></header>
+      <code>manifest.webapp</code>
+        <pre style="font-size: 16px;">
+        <code>{</code>
+        <code>  "name": "Name of the app",</code>
+        <code>  "description": "Description of the app",</code>
+        <code>  "launch_path": "/",</code>
+        <code>  "icons": {</code>
+        <code>    "128": "/img/icon-128.png"</code>
+        <code>  },</code>
+        <code>  "developer": {</code>
+        <code>    "name": "Enclave Games",</code>
+        <code>    "url": "http://enclavegames.com"</code>
+        <code>  },</code>
+        <code>  "default_locale": "en"</code>
+        <code>}</code>
+      </pre>
+      <footer class="notes">The manifest file is a simple JSON file containing the basic information about your game. The code above is the minimal working example.</footer>
+    </section>
+  </div></div>
+
+  <div id="submit" class="slide"><div>
+    <section>
+      <header><h2>Submit form</h2></header>
+      <img style="width: 70%;" src="img/marketplace-form.jpg" alt="Marketplace Form" />
+      <p><a href="https://marketplace.firefox.com/developers/submit/">marketplace.firefox.com/developers/submit/</a></p>
+      <footer class="notes">Using the submit form is easy, validating your game takes only a few days and if something goes wrong you'll get the actual feedback on how to fix it.</footer>
+    </section>
+  </div></div>
+
+  <div id="install" class="slide"><div>
+    <section>
+      <header><h2>Install from the Web</h2></header>
+      <pre>
+        <code>var installapp = navigator.mozApps.install(manifestURL);</code>
+        <code>installapp.onsuccess = function(data) {</code>
+        <code>  // "App was installed"</code>
+        <code>};</code>
+        <code>installapp.onerror = function() {</code>
+        <code>  // "App was NOT installed,</code>
+        <code>  // check the installapp.error.name for more info"</code>
+        <code>}</code>
+      </pre>
+      <footer class="notes">You don't even have to publish your game in the Marketplace to have people play it on the Firefox OS devices. You don't have to point them there to install the game - you can do that directly from your website.</footer>
+    </section>
+  </div></div>
+
+  <div id="monetisation" class="slide"><div>
+    <section>
+      <header><h2>Monetisation</h2></header>
+      <img style="float: right; width: 60%;" src="img/money.jpg" alt="Monetization" />
+      <ul>
+        <li>Paid games</li>
+        <li>In-app purchases</li>
+        <li>Advertisements</li>
+        <li>Licensing</li>
+        <li>Game-related</li>
+      </ul>
+      <footer class="notes">Monetisation is important if you want to make games for a living. As you remember: "the technology is ready", also in this aspect. All the "usual" approaches to game development in general (no matter the platform) work with HTML5 games too. You can sell your game, add IAPs, adverts, sell licenses or earn on related activities like writing articles or running workshops.</footer>
+    </section>
+  </div></div>
+
+  <div id="wrap" class="slide"><div>
+    <section>
+      <header><h2>Wrapping up</h2></header>
+      <img style="float: right; width: 60%;" src="img/firefoxos-html5games-img16.png" alt="Craigen in the Marketplace" />
+      <p>
+        <ul>
+          <li>Easy to build for</li>
+          <li>Easy to publish</li>
+          <li>Hardware platform<br />for the Web</li>
+          <li>Create, test,<br />publish, monetize!</li>
+        </ul>
+      </p>
+      <footer class="notes">To summarize this: it's easy to build HTML5 games with the tools we already have, easy to publish the games. Firefox OS is here to make most of the hardware platform. All the pieces are available - the only thing you need is time and motivation to do whatever you want.</footer>
+    </section>
+  </div></div>
+
+  <div id="resources" class="slide"><div>
+    <section>
+      <header><h2>Resources</h2></header>
+      <ul>
+        <li><a href="http://mobile.tutsplus.com/tutorials/firefox-os/preparing-for-firefox-os/">Preparing for Firefox OS</a></li>
+        <li><a href="https://hacks.mozilla.org/2013/05/optimizing-your-javascript-game-for-firefox-os/">Optimizing your JavaScript game for Firefox OS</a></li>
+        <li><a href="http://html5hub.com/screen-size-management-in-mobile-html5-games/">Screen size management in mobile HTML5 games</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Tools/Firefox_OS_Simulator">Firefox OS Simulator</a></li>
+        <li><a href="https://hacks.mozilla.org/2013/10/introducing-the-firefox-os-app-manager/">Firefox OS App Manager</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/Apps/Manifest">More about the manifest file</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/Apps/Publishing/Submitting_an_app">More about the submit process</a></li>
+      </ul>
+      <footer class="notes">Here's the list of available resources where you can read more about building games for Firefox OS.</footer>
+    </section>
+  </div></div>
+
+  <div id="thanks" class="slide"><div>
+    <section>
+      <header>
+        <h2>Thanks! Questions?</h2>
+      </header>
+      <ul class="nobull">
+        <li>{name}</li>
+        <li><strong>Slides</strong>: {slideurl}</li>
+      </ul>
+      <footer class="notes">Finish the talk. Ask for questions.</footer>
+    </section>
+  </div></div>
+
+  <!--
+    To hide progress bar from entire presentation
+    just remove “progress” element.
+    -->
+  <div class="progress"><div></div></div>
+  <script src="scripts/script.js"></script>
+  <!-- Copyright © 2010–2012 Vadim Makeev — pepelsbey.net -->
+</body>
+</html>

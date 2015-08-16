@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Gamedev Phaser Workshop - lesson 02: Scaling</title>
+    <style>* { padding: 0; margin: 0; }</style>
+    <script src="js/phaser.2.4.2.min.js"></script>
+</head>
+<body>
+<script>
+var game = new Phaser.Game(480, 320, Phaser.AUTO, null, {preload: preload, create: create, update: update});
+
+function preload() {
+    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    game.scale.pageAlignHorizontally = true;
+    game.scale.pageAlignVertically = true;
+    game.stage.backgroundColor = '#eee';
+}
+function create() {}
+function update() {}
+</script>
+</body>
+</html>

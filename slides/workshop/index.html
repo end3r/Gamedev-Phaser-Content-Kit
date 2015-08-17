@@ -1,0 +1,544 @@
+<!DOCTYPE HTML>
+<!-- <html lang="en-US"> -->
+<html lang="en-US" class="fade">
+<!-- 
+  ^ a class of "fade" makes slides fade smoothly into one another
+ -->
+<!-- <html lang="en-US" class="nonumbers"> -->
+<!-- 
+  If you want no numbers on the slides add a "nonumbers" class 
+  to the HTML element.
+  Adding a class of "fade" will make slides fade into another. 
+-->
+<head>
+  <meta charset="UTF-8">
+  <title>Build HTML5 Games with Phaser</title>
+<!-- 
+  If you upload your slides to the web, ensure that you have 
+  a good title - this shows up in search results and social
+  media links
+ -->
+  <meta name="viewport" content="width=device-width, user-scalable=yes">
+  <link rel="stylesheet" href="themes/mozilla/styles/style.css">
+</head>
+<body class="list">
+  <header class="caption">
+    <h1>Build HTML5 Games with Phaser</h1>
+    <p class="footer">
+      {Your name and details}
+    </p>
+  </header>
+  <aside class="talkdescription">
+    <p>This slide deck is using the shower system - roll over the previews to see the notes and click any slide to go into presentation mode. Then use keys to navigate. <button onclick="goFullScreen()">Go fullscreen</button></p>
+    <p class="abstract">
+      Learn how to build simple mobile 2D HTML5 games using the Phaser framework.
+    </p>
+  </aside>
+
+<!-- 
+    Simply copy the whole block for each slide you want.
+  Special slides get extra classes. Each slide needs an ID 
+  to allow for bookmarking and target jumping.
+-->
+
+  <div id="cover" class="slide"><div>
+    <section>
+      <header>
+        <h2>Build HTML5 Games with Phaser</h2>
+      </header>
+      <small class="byline">
+        {Firstname}, {Lastname}, {Conference}, {Location}, {date}
+      </small>
+      <footer class="notes">
+        This is a simple cover slide
+      </footer>
+    </section>
+  </div></div>
+
+<!-- end slide block -->
+
+<!--
+  <div id="idid" class="slide"><div>
+    <section>
+      <header><h2>Title</h2></header>
+      <p>Lorem ipsum dolor sit amet.</p>
+      <footer class="notes">Notes</footer>
+    </section>
+  </div></div>
+-->
+
+  <div id="contents" class="slide"><div>
+    <section>
+      <header><h2>Table of Contents</h2></header>
+      <ol class="longlist">
+        <li>Initialize the framework</li>
+        <li>Scaling</li>
+        <li>Load the assets and print them on screen</li>
+        <li>Move the ball</li>
+        <li>Physics</li>
+        <li>Bounce off the walls</li>
+        <li>Player paddle and controls</li>
+        <li>Game over</li>
+        <li>Build the brick field</li>
+        <li>Collision detection</li>
+        <li>The score</li>
+        <li>Win the game</li>
+        <li>Extra lives</li>
+        <li>Animations and tweens</li>
+        <li>Buttons</li>
+        <li>Randomizing gameplay</li>
+      </ol>
+      <footer class="notes">We're going to build a simple game that will implement the most important pieces like rendering images on screen, controlling the game with the input, collision detection, game over state and such.</footer>
+    </section>
+  </div></div>
+
+  <div id="breakout" class="slide"><div>
+    <section>
+      <header><h2>Breakout</h2></header>
+      <p><img src="img/mdn-breakout-gameplay.png" alt="Breakout gameplay" /></p>
+      <footer class="notes">Let's start with showing what we are going to build: a Breakout clone. It is a very simple game, so we can focus on the small pieces of code and do it step by step.</footer>
+    </section>
+  </div></div>
+
+  <div id="preparation" class="slide"><div>
+    <section>
+      <header><h2>0. Preparation</h2></header>
+      <ul>
+        <li>Basic JavaScript knowledge</li>
+        <li>Open mind, eager to learn</li>
+      </ul>
+      <footer class="notes">Some basic JavaScript knowledge is required, so we can focus on the game itself.</footer>
+    </section>
+  </div></div>
+
+  <div id="canvas" class="slide"><div>
+    <section>
+      <header><h2>1. Initialize the framework</h2></header>
+      <footer class="notes">First, let's initialize the Phaser framework and make sure everything works.</footer>
+    </section>
+  </div></div>
+
+  <div id="html" class="slide"><div>
+    <section>
+      <header><h2>HTML structure</h2></header>
+        <pre style="font-size: 12px;">
+          <code>&lt;!DOCTYPE html&gt;</code>
+          <code>&lt;html&gt;</code>
+          <code>&lt;head&gt;</code>
+          <code>  &lt;meta charset="utf-8" /&gt;</code>
+          <code>  &lt;title&gt;Gamedev Phaser Workshop - lesson 01: Initialize the framework&lt;/title&gt;</code>
+          <code>  &lt;style&gt;* { padding: 0; margin: 0; }&lt;/style&gt;</code>
+          <code>  &lt;script src="js/phaser.2.4.2.min.js"&gt;&lt;/script&gt;</code>
+          <code>&lt;/head&gt;</code>
+          <code>&lt;body&gt;</code>
+          <code>&lt;script&gt;</code>
+          <code>var game = new Phaser.Game(480, 320, Phaser.AUTO, null, {</code>
+          <code>  preload: preload, create: create, update: update</code>
+          <code>});</code>
+          <code>function preload() {}</code>
+          <code>function create() {}</code>
+          <code>function update() {}</code>
+          <code>&lt;/script&gt;</code>
+          <code>&lt;/body&gt;</code>
+          <code>&lt;/html&gt;</code>
+        </pre>
+      <footer class="notes">That's our HTML document structure. It contains the basic information we need. All the JavaScript code will be written inside those Script tags and the Phaser framework will render the Canvas element on its own.</footer>
+    </section>
+  </div></div>
+
+  <div id="scaling" class="slide"><div>
+    <section>
+      <header><h2>2. Scaling</h2></header>
+      <pre>
+        <code>function preload() {</code>
+        <code>  game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;</code>
+        <code>  game.scale.pageAlignHorizontally = true;</code>
+        <code>  game.scale.pageAlignVertically = true;</code>
+        <code>  game.stage.backgroundColor = '#eee';</code>
+        <code>}</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="load" class="slide"><div>
+    <section>
+      <header><h2>3. Load and print the assets</h2></header>
+      <pre>
+        <code>var ball;</code>
+        <code>function preload() {</code>
+        <code>  // ...</code>
+        <code>  game.load.image('ball', img_ball);</code>
+        <code>}</code>
+        <code>function create() {</code>
+        <code>  ball = game.add.sprite(50, 50, 'ball');</code>
+        <code>}</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="move" class="slide"><div>
+    <section>
+      <header><h2>4. Move the ball</h2></header>
+      <pre>
+        <code>function update() {</code>
+        <code>  ball.x += 1;</code>
+        <code>  ball.y += 1;</code>
+        <code>}</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="physics" class="slide"><div>
+    <section>
+      <header><h2>5. Physics</h2></header>
+      <pre>
+        <code>function create() {</code>
+        <code>  game.physics.startSystem(Phaser.Physics.ARCADE);</code>
+        <code>  ball = game.add.sprite(50, 50, 'ball');</code>
+        <code>  game.physics.enable(ball, Phaser.Physics.ARCADE);</code>
+        <code>  ball.body.velocity.set(150, 150);</code>
+        <code>}</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="bounce" class="slide"><div>
+    <section>
+      <header><h2>6. Bounce off the walls</h2></header>
+      <pre>
+        <code>function create() {</code>
+        <code>  // ...</code>
+        <code>  ball.body.collideWorldBounds = true;</code>
+        <code>  ball.body.bounce.set(1);</code>
+        <code>}</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="player" class="slide"><div>
+    <section>
+      <header><h2>7. Player paddle and controls</h2></header>
+      <pre style="font-size: 12px;">
+        <code>var paddle;</code>
+        <code>function preload() {</code>
+        <code>  // ...</code>
+        <code>  game.load.image('paddle', 'img/paddle.png');</code>
+        <code>}</code>
+        <code>function create() {</code>
+        <code>    // ...</code>
+        <code>  paddle = game.add.sprite(game.world.width*0.5, game.world.height-5, 'paddle');</code>
+        <code>  paddle.anchor.set(0.5,1);</code>
+        <code>  game.physics.enable(paddle, Phaser.Physics.ARCADE);</code>
+        <code>  paddle.body.immovable = true;</code>
+        <code>}</code>
+        <code>function update() {</code>
+        <code>  game.physics.arcade.collide(ball, paddle);</code>
+        <code>  paddle.x = game.input.x || game.world.width*0.5;</code>
+        <code>}</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="gameover" class="slide"><div>
+    <section>
+      <header><h2>8. Game over</h2></header>
+      <pre>
+        <code>function create() {</code>
+        <code>  game.physics.startSystem(Phaser.Physics.ARCADE);</code>
+        <code>  game.physics.arcade.checkCollision.down = false;</code>
+        <code>  // ...</code>
+        <code>  ball.checkWorldBounds = true;</code>
+        <code>  ball.events.onOutOfBounds.add(function(){</code>
+        <code>    alert('Game over!');</code>
+        <code>    location.reload();</code>
+        <code>  }, this);</code>
+        <code>}</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="bricks" class="slide"><div>
+    <section>
+      <header><h2>9. Build the brick field</h2></header>
+      <pre style="font-size: 20px;">
+        <code>var bricks;</code>
+        <code>var newBrick;</code>
+        <code>var brickInfo;</code>
+        <code>function preload() {</code>
+        <code>  // ...</code>
+        <code>  game.load.image('brick', 'img/brick.png');</code>
+        <code>}</code>
+        <code>function create(){</code>
+        <code>  // ...</code>
+        <code>  initBricks();</code>
+        <code>}</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="bricks-init" class="slide"><div>
+    <section>
+      <pre style="font-size: 20px;">
+        <code>function initBricks() {</code>
+        <code>  brickInfo = {</code>
+        <code>    width: 50,</code>
+        <code>    height: 20,</code>
+        <code>    count: {</code>
+        <code>      row: 7,</code>
+        <code>      col: 3</code>
+        <code>    },</code>
+        <code>    offset: {</code>
+        <code>      top: 50,</code>
+        <code>      left: 60</code>
+        <code>    },</code>
+        <code>    padding: 10</code>
+        <code>  }</code>
+        <code>}</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="bricks-group" class="slide"><div>
+    <section>
+      <pre style="font-size: 18px;">
+        <code>function initBricks() {</code>
+        <code>  // ...</code>
+        <code>  bricks = game.add.group();</code>
+        <code>  for(c=0; c&lt;brickInfo.count.col; c++) {</code>
+        <code>    for(r=0; r&lt;brickInfo.count.row; r++) {</code>
+        <code>      var brickX = (r*(brickInfo.width+brickInfo.padding))+brickInfo.offset.left;</code>
+        <code>      var brickY = (c*(brickInfo.height+brickInfo.padding))+brickInfo.offset.top;</code>
+        <code>      newBrick = game.add.sprite(brickX, brickY, 'brick');</code>
+        <code>      game.physics.enable(newBrick, Phaser.Physics.ARCADE);</code>
+        <code>      newBrick.body.immovable = true;</code>
+        <code>      newBrick.anchor.set(0.5);</code>
+        <code>      bricks.add(newBrick);</code>
+        <code>    }</code>
+        <code>  }</code>
+        <code>}</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="collision" class="slide"><div>
+    <section>
+      <header><h2>10. Collision detection</h2></header>
+      <pre>
+        <code>function update() {</code>
+        <code>  game.physics.arcade.collide(ball, paddle);</code>
+        <code>  game.physics.arcade.collide(ball, bricks, ballHitBrick);</code>
+        <code>  paddle.x = game.input.x || game.world.width*0.5;</code>
+        <code>}</code>
+        <code>function ballHitBrick(ball, brick) {</code>
+        <code>  brick.kill();</code>
+        <code>}</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="score" class="slide"><div>
+    <section>
+      <header><h2>11. The score</h2></header>
+      <pre style="font-size: 20px;">
+        <code>var scoreText;</code>
+        <code>var score = 0;</code>
+        <code>function create() {</code>
+        <code>  // ...</code>
+        <code>  scoreText = game.add.text(5, 5, 'Points: 0',</code>
+        <code>    { font: '18px Arial', fill: '#0095DD' });</code>
+        <code>}</code>
+        <code>function ballHitBrick(ball, brick) {</code>
+        <code>  brick.kill();</code>
+        <code>  score += 10;</code>
+        <code>  scoreText.setText('Points: '+score);</code>
+        <code>}</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="win" class="slide"><div>
+    <section>
+      <header><h2>12. Win the game</h2></header>
+      <pre>
+        <code>function ballHitBrick(ball, brick) {</code>
+        <code>  brick.kill();</code>
+        <code>  score += 10;</code>
+        <code>  scoreText.setText('Points: '+score);</code>
+        <code>  if(score === brickInfo.count.row*brickInfo.count.col*10) {</code>
+        <code>    alert('You won the game, congratulations!');</code>
+        <code>    location.reload();</code>
+        <code>  }</code>
+        <code>}</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="lives" class="slide"><div>
+    <section>
+      <header><h2>13. Extra lives</h2></header>
+      <pre style="font-size: 16px;">
+        <code>var lives = 3;</code>
+        <code>var textStyle;</code>
+        <code>var livesText;</code>
+        <code>var lifeLostText;</code>
+        <code>function create() {</code>
+        <code>  // ...</code>
+        <code>  textStyle = { font: '18px Arial', fill: '#0095DD' };</code>
+        <code>  scoreText = game.add.text(5, 5, 'Points: 0', textStyle);</code>
+        <code>  livesText = game.add.text(game.world.width-5, 5, 'Lives: '+lives, textStyle);</code>
+        <code>  livesText.anchor.set(1,0);</code>
+        <code>  lifeLostText = game.add.text(game.world.width*0.5, game.world.height*0.5,</code>
+        <code>    'Life lost, click to continue', textStyle);</code>
+        <code>  lifeLostText.anchor.set(0.5);</code>
+        <code>  lifeLostText.visible = false;</code>
+        <code>}</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="lives-code" class="slide"><div>
+    <section>
+      <pre style="font-size: 14px;">
+        <code>function create() {</code>
+        <code>  // ...</code>
+        <code>  ball.events.onOutOfBounds.add(ballLeaveScreen, this);</code>
+        <code>}</code>
+        <code>function ballLeaveScreen() {</code>
+        <code>  lives--;</code>
+        <code>  if(lives) {</code>
+        <code>    livesText.setText('Lives: '+lives);</code>
+        <code>    lifeLostText.visible = true;</code>
+        <code>    ball.reset(game.world.width*0.5, game.world.height-25);</code>
+        <code>    paddle.reset(game.world.width*0.5, game.world.height-5);</code>
+        <code>    game.input.onDown.addOnce(function(){</code>
+        <code>      lifeLostText.visible = false;</code>
+        <code>      ball.body.velocity.set(150, -150);</code>
+        <code>    }, this);</code>
+        <code>  }</code>
+        <code>  else {</code>
+        <code>    alert('You lost, game over!');</code>
+        <code>    location.reload();</code>
+        <code>  }</code>
+        <code>}</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="animations" class="slide"><div>
+    <section>
+      <header><h2>14. Animations and tweens</h2></header>
+      <pre style="font-size: 14px;">
+        <code>function preload() {</code>
+        <code>  // ...</code>
+        <code>  game.load.spritesheet('ball', 'img/wobble.png', 20, 20);</code>
+        <code>}</code>
+        <code>function create() {</code>
+        <code>  // ...</code>
+        <code>  ball = game.add.sprite(50, 250, 'ball');</code>
+        <code>  ball.animations.add('wobble', [0,1,0,2,0,1,0,2,0], 24);</code>
+        <code>}</code>
+        <code>function update() {</code>
+        <code>  game.physics.arcade.collide(ball, paddle, ballHitPaddle);</code>
+        <code>  // ...</code>
+        <code>}</code>
+        <code>function ballHitPaddle(ball, paddle) {</code>
+        <code>  ball.animations.play('wobble');</code>
+        <code>}</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="animations-tween" class="slide"><div>
+    <section>
+      <pre style="font-size: 16px;">
+        <code>function ballHitBrick(ball, brick) {</code>
+        <code>  var killTween = this.add.tween(brick.scale);</code>
+        <code>  killTween.to({x:0,y:0}, 200, Phaser.Easing.Linear.None);</code>
+        <code>  killTween.onComplete.addOnce(function(){</code>
+        <code>    brick.kill();</code>
+        <code>  }, this);</code>
+        <code>  killTween.start();</code>
+        <code>  score += 10;</code>
+        <code>  scoreText.setText('Points: '+score);</code>
+        <code>  if(score === brickInfo.count.row*brickInfo.count.col*10) {</code>
+        <code>    alert('You won the game, congratulations!');</code>
+        <code>    location.reload();</code>
+        <code>  }</code>
+        <code>}</code>
+        <code>// game.add.tween(brick.scale).to({x:2,y:2}, 500, Phaser.Easing.Elastic.Out, true, 100);</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="button" class="slide"><div>
+    <section>
+      <header><h2>15. Buttons</h2></header>
+      <pre style="font-size: 20px;">
+        <code>var playing = false;</code>
+        <code>var startButton;</code>
+        <code>function preload() {</code>
+        <code>  // ...</code>
+        <code>  game.load.spritesheet('button', 'img/button.png', 120, 40);</code>
+        <code>}</code>
+        <code>function create() {</code>
+        <code>  // ...</code>
+        <code>  startButton = game.add.button(game.world.width*0.5,</code>
+        <code>    game.world.height*0.5, 'button', startGame, this, 1, 0, 2);</code>
+        <code>  startButton.anchor.set(0.5);</code>
+        <code>}</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="button-start" class="slide"><div>
+    <section>
+      <pre>
+        <code>function startGame() {</code>
+        <code>  startButton.destroy();</code>
+        <code>  ball.body.velocity.set(150, -150);</code>
+        <code>  playing = true;</code>
+        <code>}</code>
+        <code>function update() {</code>
+        <code>  // ...</code>
+        <code>  if(playing) {</code>
+        <code>    paddle.x = game.input.x || game.world.width*0.5;</code>
+        <code>  }</code>
+        <code>}</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="gameplay" class="slide"><div>
+    <section>
+      <header><h2>16. Randomizing gameplay</h2></header>
+      <pre>
+        <code>function ballHitPaddle(ball, paddle) {</code>
+        <code>  ball.animations.play('wobble');</code>
+        <code>  ball.body.velocity.x = -1*5*(paddle.x-ball.x);</code>
+        <code>}</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="thanks" class="slide"><div>
+    <section>
+      <header>
+        <h2>Thanks! Questions?</h2>
+      </header>
+      <ul class="nobull">
+        <li>{Your name and details}</li>
+        <li><strong>Slides</strong>: {slideurl}</li>
+      </ul>
+    <footer class="notes">Provide URL to the slides. Ask if there are any questions.</footer>
+    </section>
+  </div></div>
+
+  <!--
+    To hide progress bar from entire presentation
+    just remove “progress” element.
+    -->
+  <div class="progress"><div></div></div>
+  <script src="scripts/script.js"></script>
+  <!-- Copyright © 2010–2012 Vadim Makeev — pepelsbey.net -->
+</body>
+</html>

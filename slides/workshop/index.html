@@ -12,7 +12,7 @@
 -->
 <head>
   <meta charset="UTF-8">
-  <title>Build HTML5 Games with Phaser</title>
+  <title>Build mobile HTML5 Games with Phaser</title>
 <!-- 
   If you upload your slides to the web, ensure that you have 
   a good title - this shows up in search results and social
@@ -23,9 +23,9 @@
 </head>
 <body class="list">
   <header class="caption">
-    <h1>Build HTML5 Games with Phaser</h1>
+    <h1>Build mobile HTML5 Games with Phaser</h1>
     <p class="footer">
-      {Your name and details}
+      Andrzej Mazur, @end3r
     </p>
   </header>
   <aside class="talkdescription">
@@ -46,8 +46,9 @@
       <header>
         <h2>Build HTML5 Games with Phaser</h2>
       </header>
+      <img class="bottom" height="300" src="img/phaser.png" alt="Phaser" />
       <small class="byline">
-        {Firstname}, {Lastname}, {Conference}, {Location}, {date}
+        Andrzej Mazur, BrazilJS, Porto Alegre, August 20th 2015
       </small>
       <footer class="notes">
         This is a simple cover slide
@@ -69,7 +70,34 @@
 
   <div id="contents" class="slide"><div>
     <section>
+      <header><h2>What we are going to cover</h2></header>
+      <img src="img/mdn-breakout-phaser02.png" class="right" alt="Breakout Phaser gameplay" />
+      <ul class="longlist">
+        <li>The framework</li>
+        <li>Scaling the Canvas</li>
+        <li>Loading the assets</li>
+        <li>Drawing images and text</li>
+        <li>Physics</li>
+        <li>Mobile input</li>
+        <li>Collision detection</li>
+        <li>Winning and losing</li>
+        <li>Animations nad tweens</li>
+      </ul>
+      <footer class="notes">This talk will cover basic elements of a simple HTML5 game like drawing, animation, input and collision detection.</footer>
+    </section>
+  </div></div>
+
+  <div id="contents2" class="slide"><div>
+    <section>
       <header><h2>Table of Contents</h2></header>
+      <ol class="longlist" style="float: right;">
+        <li>The score</li>
+        <li>Win the game</li>
+        <li>Extra lives</li>
+        <li>Animations and tweens</li>
+        <li>Buttons</li>
+        <li>Randomizing gameplay</li>
+      </ol>
       <ol class="longlist">
         <li>Initialize the framework</li>
         <li>Scaling</li>
@@ -81,22 +109,8 @@
         <li>Game over</li>
         <li>Build the brick field</li>
         <li>Collision detection</li>
-        <li>The score</li>
-        <li>Win the game</li>
-        <li>Extra lives</li>
-        <li>Animations and tweens</li>
-        <li>Buttons</li>
-        <li>Randomizing gameplay</li>
       </ol>
       <footer class="notes">We're going to build a simple game that will implement the most important pieces like rendering images on screen, controlling the game with the input, collision detection, game over state and such.</footer>
-    </section>
-  </div></div>
-
-  <div id="breakout" class="slide"><div>
-    <section>
-      <header><h2>Breakout</h2></header>
-      <p><img src="img/mdn-breakout-gameplay.png" alt="Breakout gameplay" /></p>
-      <footer class="notes">Let's start with showing what we are going to build: a Breakout clone. It is a very simple game, so we can focus on the small pieces of code and do it step by step.</footer>
     </section>
   </div></div>
 
@@ -105,7 +119,13 @@
       <header><h2>0. Preparation</h2></header>
       <ul>
         <li>Basic JavaScript knowledge</li>
-        <li>Open mind, eager to learn</li>
+        <li>Computer (Windows, Mac OS X, Linux)
+            <ul>
+              <li>Browser (Firefox, Chrome, Safari, Opera, Internet Explorer)</li>
+              <li>Text editor (Notepad, Sublime Text, Smultron)</li>
+            </ul>
+          </li>
+        <li>Materials: <a href="http://end3r.github.io/Gamedev-Phaser-Content-Kit/">http://end3r.github.io/Gamedev-Phaser-Content-Kit/</a></li>
       </ul>
       <footer class="notes">Some basic JavaScript knowledge is required, so we can focus on the game itself.</footer>
     </section>
@@ -113,7 +133,13 @@
 
   <div id="canvas" class="slide"><div>
     <section>
-      <header><h2>1. Initialize the framework</h2></header>
+      <header><h2>1. The framework</h2></header>
+      <ul>
+        <li>Frameworks vs pure JavaScript game development</li>
+        <li>Advantages &frasl; disadvantages</li>
+        <li>Why Phaser?</li>
+        <li>Breakout game</li>
+      </ul>
       <footer class="notes">First, let's initialize the Phaser framework and make sure everything works.</footer>
     </section>
   </div></div>
@@ -157,6 +183,7 @@
         <code>  game.stage.backgroundColor = '#eee';</code>
         <code>}</code>
       </pre>
+      <p>Scale modes: NO_SCALE, EXACT_FIT, SHOW_ALL, RESIZE, USER_SCALE.</p>
     </section>
   </div></div>
 
@@ -176,13 +203,24 @@
     </section>
   </div></div>
 
+  <div id="print" class="slide"><div>
+    <section>
+      <header><h2>Print it</h2></header>
+      <p><img src="img/lesson02.png" alt="Breakout Phaser gameplay" /></p>
+      <pre>
+        <code>ball = game.add.sprite(400,300, 'ball');</code>
+      </pre>
+    </section>
+  </div></div>
+
   <div id="move" class="slide"><div>
     <section>
       <header><h2>4. Move the ball</h2></header>
+      <p><img src="img/ball-move.png" style="float: right;" alt="Breakout Phaser gameplay" /></p>
       <pre>
         <code>function update() {</code>
-        <code>  ball.x += 1;</code>
-        <code>  ball.y += 1;</code>
+        <code>  ball.x -= 1;</code>
+        <code>  ball.y -= 1;</code>
         <code>}</code>
       </pre>
     </section>
@@ -199,6 +237,7 @@
         <code>  ball.body.velocity.set(150, 150);</code>
         <code>}</code>
       </pre>
+      <p>Physics systems: Arcade, P2, Ninja and Box2D.</p>
     </section>
   </div></div>
 
@@ -218,7 +257,8 @@
   <div id="player" class="slide"><div>
     <section>
       <header><h2>7. Player paddle and controls</h2></header>
-      <pre style="font-size: 12px;">
+      <p><img src="img/mdn-breakout-phaser01.png" style="float: right;" alt="Breakout Phaser gameplay" /></p>
+      <pre style="font-size: 14px;">
         <code>var paddle;</code>
         <code>function preload() {</code>
         <code>  // ...</code>
@@ -226,7 +266,8 @@
         <code>}</code>
         <code>function create() {</code>
         <code>    // ...</code>
-        <code>  paddle = game.add.sprite(game.world.width*0.5, game.world.height-5, 'paddle');</code>
+        <code>  paddle = game.add.sprite(game.world.width*0.5,
+          game.world.height-5, 'paddle');</code>
         <code>  paddle.anchor.set(0.5,1);</code>
         <code>  game.physics.enable(paddle, Phaser.Physics.ARCADE);</code>
         <code>  paddle.body.immovable = true;</code>
@@ -306,6 +347,38 @@
         <code>  bricks = game.add.group();</code>
         <code>  for(c=0; c&lt;brickInfo.count.col; c++) {</code>
         <code>    for(r=0; r&lt;brickInfo.count.row; r++) {</code>
+        <code>      var brickX = 0;</code>
+        <code>      var brickY = 0;</code>
+        <code>      newBrick = game.add.sprite(brickX, brickY, 'brick');</code>
+        <code>      game.physics.enable(newBrick, Phaser.Physics.ARCADE);</code>
+        <code>      newBrick.body.immovable = true;</code>
+        <code>      newBrick.anchor.set(0.5);</code>
+        <code>      bricks.add(newBrick);</code>
+        <code>    }</code>
+        <code>  }</code>
+        <code>}</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="bricks-pos" class="slide"><div>
+    <section>
+      <p><img src="img/game-bricks.png" alt="Breakout Phaser gameplay" /></p>
+      <pre style="font-size: 18px;">
+        <code>var brickX = (r*(brickInfo.width+brickInfo.padding))+brickInfo.offset.left;</code>
+        <code>var brickY = (c*(brickInfo.height+brickInfo.padding))+brickInfo.offset.top;</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="bricks-all" class="slide"><div>
+    <section>
+      <pre style="font-size: 18px;">
+        <code>function initBricks() {</code>
+        <code>  // ...</code>
+        <code>  bricks = game.add.group();</code>
+        <code>  for(c=0; c&lt;brickInfo.count.col; c++) {</code>
+        <code>    for(r=0; r&lt;brickInfo.count.row; r++) {</code>
         <code>      var brickX = (r*(brickInfo.width+brickInfo.padding))+brickInfo.offset.left;</code>
         <code>      var brickY = (c*(brickInfo.height+brickInfo.padding))+brickInfo.offset.top;</code>
         <code>      newBrick = game.add.sprite(brickX, brickY, 'brick');</code>
@@ -323,6 +396,13 @@
   <div id="collision" class="slide"><div>
     <section>
       <header><h2>10. Collision detection</h2></header>
+      <img src="img/collision.png" class="" alt="Collision" />
+    </section>
+  </div></div>
+
+  <div id="collision-code" class="slide"><div>
+    <section>
+      <header><h2>10. Collision detection</h2></header>
       <pre>
         <code>function update() {</code>
         <code>  game.physics.arcade.collide(ball, paddle);</code>
@@ -333,6 +413,13 @@
         <code>  brick.kill();</code>
         <code>}</code>
       </pre>
+    </section>
+  </div></div>
+
+  <div id="points" class="slide"><div>
+    <section>
+      <header><h2>11. The score</h2></header>
+      <img src="img/points.png" class="" alt="Points" />
     </section>
   </div></div>
 
@@ -359,7 +446,8 @@
   <div id="win" class="slide"><div>
     <section>
       <header><h2>12. Win the game</h2></header>
-      <pre>
+      <p>Destroy all the bricks.</p>
+      <pre style="font-size: 20px;">
         <code>function ballHitBrick(ball, brick) {</code>
         <code>  brick.kill();</code>
         <code>  score += 10;</code>
@@ -376,11 +464,20 @@
   <div id="lives" class="slide"><div>
     <section>
       <header><h2>13. Extra lives</h2></header>
+      <img src="img/lives.png" class="right" alt="Lives" />
       <pre style="font-size: 16px;">
         <code>var lives = 3;</code>
         <code>var textStyle;</code>
         <code>var livesText;</code>
         <code>var lifeLostText;</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div id="lives-code" class="slide"><div>
+    <section>
+      <header><h2>13. Extra lives</h2></header>
+      <pre style="font-size: 16px;">
         <code>function create() {</code>
         <code>  // ...</code>
         <code>  textStyle = { font: '18px Arial', fill: '#0095DD' };</code>
@@ -396,7 +493,7 @@
     </section>
   </div></div>
 
-  <div id="lives-code" class="slide"><div>
+  <div id="lives-func" class="slide"><div>
     <section>
       <pre style="font-size: 14px;">
         <code>function create() {</code>
@@ -427,6 +524,7 @@
   <div id="animations" class="slide"><div>
     <section>
       <header><h2>14. Animations and tweens</h2></header>
+      <img src="img/wobble.png" style="float: right;" alt="Wobble" />
       <pre style="font-size: 14px;">
         <code>function preload() {</code>
         <code>  // ...</code>
@@ -450,6 +548,8 @@
 
   <div id="animations-tween" class="slide"><div>
     <section>
+      <header><h2>Tweens</h2></header>
+      <img src="img/brick.png" style="float: right;" alt="Brick" />
       <pre style="font-size: 16px;">
         <code>function ballHitBrick(ball, brick) {</code>
         <code>  var killTween = this.add.tween(brick.scale);</code>
@@ -473,6 +573,7 @@
   <div id="button" class="slide"><div>
     <section>
       <header><h2>15. Buttons</h2></header>
+      <img src="img/button.png" style="float: right;" alt="Button" />
       <pre style="font-size: 20px;">
         <code>var playing = false;</code>
         <code>var startButton;</code>
@@ -517,17 +618,36 @@
         <code>  ball.body.velocity.x = -1*5*(paddle.x-ball.x);</code>
         <code>}</code>
       </pre>
+      <img src="img/bounce.png" alt="Bounce" />
     </section>
   </div></div>
+
+  <div id="next" class="slide"><div>
+    <section>
+      <header><h2>Next steps</h2></header>
+      <ul>
+        <li>Tinker with this game</li>
+        <li>Create another one</li>
+        <li>Check out popular frameworks</li>
+        <li>Read blogs, comment on forums, attend events</li>
+        <li>You're part of the community now!</li>
+      </ul>
+      <footer class="notes">Congratulations, now you know the basic logic behind the game Breakout. You can play with it, edit its contents, or create something new. You can also look for game frameworks to speed up the development. If you have any questions or problems you can always contact fellow developers - if you've come so far you are part of the community anyway.</footer>
+    </section>
+  </div></div>  
 
   <div id="thanks" class="slide"><div>
     <section>
       <header>
         <h2>Thanks! Questions?</h2>
       </header>
+      <p><strong>Andrzej Mazur</strong></p>
       <ul class="nobull">
-        <li>{Your name and details}</li>
-        <li><strong>Slides</strong>: {slideurl}</li>
+        <li><strong>Website</strong>: end3r.com</li>
+        <li><strong>Twitter</strong>: @end3r</li>
+        <li><strong>GitHub</strong>: end3r</li>
+        <li>Newsletter: gamedevjsweekly.com</li>
+        <li>Competition: js13kgames.com</li>
       </ul>
     <footer class="notes">Provide URL to the slides. Ask if there are any questions.</footer>
     </section>
